@@ -10,12 +10,9 @@ import math
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import tensorflow as tf
 
-image_path = "dreieck.jpg"
+video_path = sys.argv[1]
 # angabe in console als argument nach dem aufruf  
 
-
-#bilddatei readen
-image_data = tf.gfile.FastGFile(image_path, 'rb').read()
 
 # holt labels aus file in array 
 label_lines = [line.rstrip() for line 
@@ -30,10 +27,9 @@ with tf.gfile.FastGFile("tf_files/retrained_graph.pb", 'rb') as f:
     _ = tf.import_graph_def(graph_def, name='')	# import a serialized TensorFlow GraphDef protocol buffer, extract objects in the GraphDef as tf.Tensor
 	
 	#https://github.com/Hvass-Labs/TensorFlow-Tutorials/blob/master/inception.py ; ab zeile 276
-
 with tf.Session() as sess:
 
-	video_capture = cv2.VideoCapture('math_own_old.mp4') 
+	video_capture = cv2.VideoCapture(video_path) 
 	#frameRate = video_capture.get(5) #frame rate
 	i = 0
 	while True:  # fps._numFrames < 120
